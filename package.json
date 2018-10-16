@@ -1,11 +1,11 @@
 {
-  "name": "vue-admin-template",
-  "version": "3.8.0",
+  "name": "gzdbSysCore",
+  "version": "0.1.0",
   "license": "MIT",
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
   "author": "Pan <panfree23@gmail.com>",
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host 0.0.0.0",
     "start": "npm run dev",
     "build": "node build/build.js",
     "build:report": "npm_config_report=true npm run build",
@@ -34,6 +34,7 @@
     "babel-plugin-syntax-jsx": "6.18.0",
     "babel-plugin-transform-runtime": "6.23.0",
     "babel-plugin-transform-vue-jsx": "3.7.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-stage-2": "6.24.1",
     "chalk": "2.4.1",

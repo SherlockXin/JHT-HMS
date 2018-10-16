@@ -1,3 +1,5 @@
+import 'babel-polyfill' // 兼容 IE8
+
 import Vue from 'vue'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
