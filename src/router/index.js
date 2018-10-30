@@ -23,7 +23,7 @@ import Layout from '../views/layout/Layout'
 **/
 export const constantRouterMap = [
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
+  // { path: '/404', component: () => import('@/views/404'), hidden: true },
 
   {
     path: '/',
@@ -34,6 +34,9 @@ export const constantRouterMap = [
     children: [{
       path: 'dashboard',
       component: () => import('@/views/dashboard/index')
+    },
+    {
+      path: '404', component: () => import('@/views/404'), hidden: true
     }]
   }
 ]
@@ -68,7 +71,7 @@ export const asyncRouterMap = [
       {
         path: 'index',
         name: 'Form',
-        component: () => import('@/views/form/index'),
+        component: () => import('@/views/dept/index'),
         meta: { title: 'Form', icon: 'form' }
       }
     ]
@@ -85,7 +88,7 @@ export const asyncRouterMap = [
     },
     children: [
       {
-        path: 'menu1',
+        path: '/menu1',
         component: () => import('@/views/nested/menu1/index'), // Parent router-view
         name: 'Menu1',
         meta: { title: 'Menu1' },
@@ -98,7 +101,8 @@ export const asyncRouterMap = [
           },
           {
             path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
+            // component: () => import('@/views/nested/menu1/menu1-2'),
+            component: null,
             name: 'Menu1-2',
             meta: { title: 'Menu1-2' },
             children: [

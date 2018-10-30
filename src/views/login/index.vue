@@ -23,9 +23,19 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
+      <el-form-item prop="vcode">
+        <span class="svg-container">
+          <svg-icon icon-class="code" />
+        </span>
+        <el-input v-model="loginForm.captcha" style="width:60%" type="text" placeholder="验证码" />
+        <img class="captcha" :src="src" alt="" @click="refreshCode">
+        <span>
+          
+        </span>
+      </el-form-item>
       <el-form-item>
         <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
-          Sign in
+          登 录
         </el-button>
       </el-form-item>
       <div class="tips">
@@ -59,13 +69,15 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: 'admin'
+        password: 'admin',
+        captcha: null
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
       loading: false,
+      src: 'jht/captcha.jpg',
       pwdType: 'password',
       redirect: undefined
     }
@@ -86,6 +98,9 @@ export default {
         this.pwdType = 'password'
       }
     },
+    refreshCode() {
+      this.src = 'jht/captcha.jpg?t=' + new Date()
+    },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
@@ -95,6 +110,7 @@ export default {
             this.$router.push({ path: this.redirect || '/' })
           }).catch(() => {
             this.loading = false
+            this.refreshCode()
           })
         } else {
           console.log('error submit!!')
@@ -135,6 +151,12 @@ $light_gray:#eee;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
+  }
+
+  .captcha {
+    width: 31%;
+    vertical-align: middle;
+    padding: 5px;
   }
 }
 

@@ -1,4 +1,7 @@
 import { asyncRouterMap, constantRouterMap } from '@/router'
+import { getNav } from '@/api/login'
+import Layout from '@/views/layout/Layout'
+import Transition from '@/views/layout/Transition'
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
@@ -34,31 +37,82 @@ function filterAsyncRouter(routes, roles) {
   return res
 }
 
+function generateRoutes(menuList) {
+  const routerList = getRouters(menuList)
+
+  const errorRouter = [
+    { path: '*', redirect: '/404', hidden: true }
+  ]
+  return routerList.concat(errorRouter)
+}
+
+function getRouters(menuList) {
+  const routers = []
+  for (let i = 0; i < menuList.length; i++) {
+    const menu = menuList[i]
+
+    const router = {
+      path: menu.parentId === 0 ? '/' + menu.url : menu.url,
+      component: menu.parentId === 0 ? Layout : Transition,
+      name: menu.name,
+      meta: {
+        title: menu.name,
+        icon: menu.icon
+      },
+      children: []
+    }
+    if (menu.type === 1) {
+      router.component = () => import('@/views/' + menu.url + '/index')
+    }
+    if (menu.list) {
+      // router.redirect = '/' + menu.url + '/' + menu.list[0].url
+      router.children = getRouters(menu.list)
+    }
+    routers.push(router)
+  }
+  return routers
+}
+
 const permission = {
   state: {
     routers: constantRouterMap,
-    addRouters: []
+    addRouters: [],
+    permissions: []
   },
   mutations: {
     SET_ROUTERS: (state, routers) => {
       state.addRouters = routers
       state.routers = constantRouterMap.concat(routers)
+    },
+    SET_PERMISSIONS: (state, permissions) => {
+      state.permissions = permissions
     }
   },
   actions: {
-    GenerateRoutes({ commit }, data) {
+    // 获取菜单信息
+    GetNav({ commit, state }) {
       return new Promise(resolve => {
-        const { roles } = data
-        let accessedRouters
-        if (roles.includes('admin')) {
-          accessedRouters = asyncRouterMap
-        } else {
-          accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
-        }
-        commit('SET_ROUTERS', accessedRouters)
-        resolve()
+        getNav().then(response => {
+          const data = response
+          commit('SET_PERMISSIONS', data.permissions)
+          commit('SET_ROUTERS', generateRoutes(data.menuList))
+          resolve()
+        })
       })
     }
+    // GenerateRoutes({ commit }, data) {
+    //   return new Promise(resolve => {
+    //     const { roles } = data
+    //     let accessedRouters
+    //     if (roles.includes('admin')) {
+    //       accessedRouters = asyncRouterMap
+    //     } else {
+    //       accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+    //     }
+    //     commit('SET_ROUTERS', accessedRouters)
+    //     resolve()
+    //   })
+    // }
   }
 }
 

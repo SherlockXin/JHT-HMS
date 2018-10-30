@@ -1,21 +1,34 @@
 import request from '@/utils/request'
 
-export function login(username, password) {
+export function login(username, password, captcha) {
+  const data = 'username=' + username + '&password=' + password + '&captcha=' + captcha
   return request({
-    url: '/user/login',
+    url: '/sys/login',
     method: 'post',
-    data: {
-      username,
-      password
-    }
+    data: data
   })
 }
 
-export function getInfo(token) {
+export function getNav() {
+  return request({
+    url: '/sys/menu/nav',
+    method: 'get'
+    // params: { token }
+  })
+}
+
+export function getInfo() {
+  return request({
+    url: '/sys/user/info',
+    method: 'get'
+  })
+}
+
+export function updateInfo(info) {
   return request({
     url: '/user/info',
-    method: 'get',
-    params: { token }
+    method: 'post',
+    data: info
   })
 }
 
