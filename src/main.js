@@ -17,8 +17,10 @@ import store from './store'
 import '@/icons' // icon
 import '@/permission' // permission control
 
-Vue.use(ElementUI, { locale })
+import utils from '@/utils'
 
+Vue.use(ElementUI, { locale })
+Vue.use(utils)
 Vue.config.productionTip = false
 
 new Vue({
