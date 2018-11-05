@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-      <h3 class="title">vue-admin-template</h3>
+      <h3 class="title">金华天酒店管理系统</h3>
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -20,7 +20,8 @@
           placeholder="password"
           @keyup.enter.native="handleLogin" />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon icon-class="eye" />
+          <svg-icon v-if="pwdType == ''" icon-class="eye-open" />
+          <svg-icon v-else icon-class="eye" />
         </span>
       </el-form-item>
       <el-form-item prop="vcode">

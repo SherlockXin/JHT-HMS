@@ -1,4 +1,4 @@
-import { asyncRouterMap, constantRouterMap } from '@/router'
+import { constantRouterMap } from '@/router'
 import { getNav } from '@/api/login'
 import Layout from '@/views/layout/Layout'
 import Transition from '@/views/layout/Transition'
@@ -52,21 +52,21 @@ function getRouters(menuList) {
     const menu = menuList[i]
 
     const router = {
-      path: menu.parentId === 0 ? '/' + menu.url : menu.url,
+      path: menu.parentId === 0 ? '/' + menu.path : menu.path,
       component: menu.parentId === 0 ? Layout : Transition,
       name: menu.name,
       meta: {
         title: menu.name,
-        icon: menu.icon
+        icon: menu.icon || 'default'
       },
       children: []
     }
     if (menu.type === 1) {
-      router.component = () => import('@/views/' + menu.url + '/index')
+      router.component = () => import('@/views/' + menu.path + '/index')
     }
-    if (menu.list) {
+    if (menu.children) {
       // router.redirect = '/' + menu.url + '/' + menu.list[0].url
-      router.children = getRouters(menu.list)
+      router.children = getRouters(menu.children)
     }
     routers.push(router)
   }
