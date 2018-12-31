@@ -1,6 +1,7 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+      <img class="logo" src="src/assets/logo.png" alt="">
       <h3 class="title">金华天酒店管理系统</h3>
       <el-form-item prop="username">
         <span class="svg-container">
@@ -174,12 +175,16 @@ $light_gray:#eee;
   background-color: $bg;
   .login-form {
     position: absolute;
-    left: 0;
-    right: 0;
+    // left: 0;
+    left: 50%;
+    top: 50%;
+    // right: 0;
     width: 520px;
     max-width: 100%;
     padding: 35px 35px 15px 35px;
-    margin: 120px auto;
+    // margin: 120px auto;
+    margin-top: -305px;
+    margin-left: -260px;
   }
   .tips {
     font-size: 14px;
@@ -202,7 +207,7 @@ $light_gray:#eee;
     font-size: 26px;
     font-weight: 400;
     color: $light_gray;
-    margin: 0px auto 40px auto;
+    margin: 0px auto 30px auto;
     text-align: center;
     font-weight: bold;
   }
@@ -214,6 +219,13 @@ $light_gray:#eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+
+  .logo {
+    position: relative;
+    width: 140px;
+    margin-bottom: 10px;
+    left: 155px;
   }
 }
 </style>

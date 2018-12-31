@@ -120,8 +120,8 @@ export default {
   filters: {},
   methods: {
     getMenuList() {
-      getMenu().then(response => {
-        this.menuList = response.menuList;
+      getMenu(true).then(response => {
+        this.menuList = response;
       });
     },
     getSelectableMenu() {
